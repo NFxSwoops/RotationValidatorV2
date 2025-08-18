@@ -52,25 +52,22 @@ function getRotationData() {
 // Parse team table for each member’s shift and meal details
 function getTeamInfo() {
   const info = {};
-  const table = document.getElementById("teamTable");
-  if (!table) return info;
+  const data = JSON.parse(localStorage.getItem("teamInfo") || "[]");
 
-  const rows = table.getElementsByTagName("tr");
-  for (let i = 1; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName("td");
-    const initials = cells[0].textContent.trim().toUpperCase();
-    info[initials] = {
-      shiftStart: parseTime(cells[1].textContent),
-      firstMealStart: parseTime(cells[2].textContent),
-      firstMealEnd: parseTime(cells[3].textContent),
-      secondMealStart: parseTime(cells[4].textContent),
-      secondMealEnd: parseTime(cells[5].textContent),
-      shiftEnd: parseTime(cells[6].textContent)
+  for (let entry of data) {
+    info[entry.initials] = {
+      shiftStart: parseTime(entry.shiftStart),
+      firstMealStart: parseTime(entry.firstMealStart),
+      firstMealEnd: parseTime(entry.firstMealEnd),
+      secondMealStart: entry.secondMealStart ? parseTime(entry.secondMealStart) : null,
+      secondMealEnd: entry.secondMealEnd ? parseTime(entry.secondMealEnd) : null,
+      shiftEnd: parseTime(entry.shiftEnd)
     };
   }
 
   return info;
 }
+
 
 // Main conflict checking logic
 function checkConflicts() {
@@ -134,3 +131,4 @@ function checkConflicts() {
 // Bind button if present
 const checkButton = document.getElementById("checkConflictsButton");
 if (checkButton) checkButton.addEventListener("click", checkConflicts);
+
