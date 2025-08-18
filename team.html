@@ -69,5 +69,34 @@
       tbody.appendChild(row);
     }
   </script>
+  <script>
+  function saveTeamInfo() {
+    const table = document.getElementById("teamTable");
+    const rows = Array.from(table.rows).slice(1);
+    const data = [];
+
+    for (let row of rows) {
+      const cells = row.querySelectorAll("td input");
+      if (cells.length !== 7) continue;
+
+      data.push({
+        initials: cells[0].value.trim().toUpperCase(),
+        shiftStart: cells[1].value,
+        firstMealStart: cells[2].value,
+        firstMealEnd: cells[3].value,
+        secondMealStart: cells[4].value,
+        secondMealEnd: cells[5].value,
+        shiftEnd: cells[6].value
+      });
+    }
+
+    localStorage.setItem("teamInfo", JSON.stringify(data));
+    alert("Team info saved!");
+  }
+</script>
+
+<button onclick="saveTeamInfo()">Save Team Info</button>
+
 </body>
 </html>
+
