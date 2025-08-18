@@ -34,7 +34,8 @@
   </style>
 </head>
 <body>
-  <table>
+
+  <table id="teamTable">
     <caption>Team Schedule Entry</caption>
     <thead>
       <tr>
@@ -52,9 +53,11 @@
     </tbody>
   </table>
 
-  <script>
-    const tbody = document.getElementById("schedule-body");
+  <button onclick="saveTeamInfo()">Save Team Info</button>
 
+  <script>
+    // Dynamically populate 14 team member rows
+    const tbody = document.getElementById("schedule-body");
     for (let i = 0; i < 14; i++) {
       const row = document.createElement("tr");
       row.innerHTML = `
@@ -68,35 +71,32 @@
       `;
       tbody.appendChild(row);
     }
-  </script>
-  <script>
-  function saveTeamInfo() {
-    const table = document.getElementById("teamTable");
-    const rows = Array.from(table.rows).slice(1);
-    const data = [];
 
-    for (let row of rows) {
-      const cells = row.querySelectorAll("td input");
-      if (cells.length !== 7) continue;
+    // Save data to localStorage
+    function saveTeamInfo() {
+      const table = document.getElementById("teamTable");
+      const rows = Array.from(table.tBodies[0].rows); // safer access to tbody
+      const data = [];
 
-      data.push({
-        initials: cells[0].value.trim().toUpperCase(),
-        shiftStart: cells[1].value,
-        firstMealStart: cells[2].value,
-        firstMealEnd: cells[3].value,
-        secondMealStart: cells[4].value,
-        secondMealEnd: cells[5].value,
-        shiftEnd: cells[6].value
-      });
+      for (let row of rows) {
+        const inputs = row.querySelectorAll("td input");
+        if (inputs.length !== 7) continue;
+
+        data.push({
+          initials: inputs[0].value.trim().toUpperCase(),
+          shiftStart: inputs[1].value,
+          firstMealStart: inputs[2].value,
+          firstMealEnd: inputs[3].value,
+          secondMealStart: inputs[4].value,
+          secondMealEnd: inputs[5].value,
+          shiftEnd: inputs[6].value
+        });
+      }
+
+      localStorage.setItem("teamInfo", JSON.stringify(data));
+      alert("Team info saved!");
     }
-
-    localStorage.setItem("teamInfo", JSON.stringify(data));
-    alert("Team info saved!");
-  }
-</script>
-
-<button onclick="saveTeamInfo()">Save Team Info</button>
+  </script>
 
 </body>
 </html>
-
