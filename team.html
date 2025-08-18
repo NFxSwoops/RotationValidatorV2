@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Schedule Input</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    input[type="text"], input[type="time"] {
+      width: 100%;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+    caption {
+      margin-bottom: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <caption>Team Schedule Entry</caption>
+    <thead>
+      <tr>
+        <th>INITIALS</th>
+        <th>SHIFT START</th>
+        <th>1ST MEAL START</th>
+        <th>1ST MEAL END</th>
+        <th>2ND MEAL START</th>
+        <th>2ND MEAL END</th>
+        <th>SHIFT END</th>
+      </tr>
+    </thead>
+    <tbody id="schedule-body">
+      <!-- JavaScript will populate 14 rows -->
+    </tbody>
+  </table>
+
+  <script>
+    const tbody = document.getElementById("schedule-body");
+
+    for (let i = 0; i < 14; i++) {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><input type="text" name="initials-${i}" placeholder="AB" maxlength="3"></td>
+        <td><input type="time" name="shiftStart-${i}"></td>
+        <td><input type="time" name="meal1Start-${i}"></td>
+        <td><input type="time" name="meal1End-${i}"></td>
+        <td><input type="time" name="meal2Start-${i}"></td>
+        <td><input type="time" name="meal2End-${i}"></td>
+        <td><input type="time" name="shiftEnd-${i}"></td>
+      `;
+      tbody.appendChild(row);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Conflict Log</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #111;
+      color: #0f0;
+      padding: 20px;
+    }
+    #logContainer {
+      border: 1px solid #444;
+      padding: 10px;
+      height: 600px;
+      overflow-y: scroll;
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h2>🚨 Conflict Log Console</h2>
+  <div id="logContainer"></div>
+
+  <script>
+    // This retrieves logs from localStorage that were set in script.js
+    const logContainer = document.getElementById("logContainer");
+    const logs = JSON.parse(localStorage.getItem("conflictLog") || "[]");
+
+    if (logs.length === 0) {
+      logContainer.innerText = "No conflicts logged yet.";
+    } else {
+      logs.forEach(msg => {
+        const line = document.createElement("div");
+        line.textContent = msg;
+        logContainer.appendChild(line);
+      });
+    }
+  </script>
+</body>
+</html>

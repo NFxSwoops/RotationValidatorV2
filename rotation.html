@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ride Rotation Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    td input {
+      width: 100%;
+      border: none;
+      text-align: center;
+    }
+    td input:focus {
+      outline: 2px solid #4CAF50;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Ride Rotation Report</h2>
+  <table id="rotationTable">
+    <thead>
+      <tr>
+        <th>Time Block</th>
+        <th>OP</th>
+        <th>Green</th>
+        <th>Purple</th>
+        <th>Group</th>
+        <th>Entrance</th>
+        <th>FlashPass</th>
+      </tr>
+    </thead>
+    <tbody id="rotationBody">
+      <!-- Rows inserted by JavaScript -->
+    </tbody>
+  </table>
+
+  <div class="button-container">
+    <button id="checkConflictsBtn">Check Conflicts</button>
+  </div>
+
+  <script>
+    const rotationBody = document.getElementById("rotationBody");
+
+    function createTimeBlocks() {
+      for (let hour = 9; hour < 25; hour++) {
+        const startHour = hour % 24;
+        const endHour = (hour + 1) % 24;
+        const formatHour = (h) => (h < 10 ? "0" + h : h);
+        const blockLabel = `${formatHour(startHour)}00 - ${formatHour(endHour)}00`;
+
+        const row = document.createElement("tr");
+        const timeCell = document.createElement("td");
+        timeCell.textContent = blockLabel;
+        row.appendChild(timeCell);
+
+        for (let i = 0; i < 6; i++) {
+          const cell = document.createElement("td");
+          const input = document.createElement("input");
+          input.type = "text";  
+          cell.appendChild(input);
+          row.appendChild(cell);
+        }
+
+        rotationBody.appendChild(row);
+      }
+    }
+
+    createTimeBlocks();
+  </script>
+</body>
+</html>
