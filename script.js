@@ -132,3 +132,4 @@ function checkConflicts() {
 const checkButton = document.getElementById("checkConflictsButton");
 if (checkButton) checkButton.addEventListener("click", checkConflicts);
 
+
