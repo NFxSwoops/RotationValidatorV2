@@ -129,7 +129,12 @@ function checkConflicts() {
 }
 
 // Bind button if present
-const checkButton = document.getElementById("checkConflictsButton");
-if (checkButton) checkButton.addEventListener("click", checkConflicts);
+const checkButton = document.getElementById("checkConflictsBtn");
+if (checkButton) {
+  checkButton.addEventListener("click", () => {
+    console.log("Check Conflicts clicked");
+    checkConflicts();
+  });
+}
 
 
